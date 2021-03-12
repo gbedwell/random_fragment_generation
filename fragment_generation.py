@@ -39,7 +39,7 @@ print "Requires:\n"
 print "\t(1) list of chromosomes\n"
 print "\t(2) corresponding chromosome fasta files\n"
 print "\t(3) chromosome bp counts file (base_counts.txt)\n\n" #see information and links above
-print "Program writes out a joined fasta file (random_sites.fa) containing the generated fragments\n\n" #random_sites.txt currently commented out
+print "Program writes out a joined fasta file (random_hits.fa) containing the generated fragments\n\n" #random_hits.txt currently commented out
 print "-"*100
 print "\n\n"
 BUILD = raw_input("Enter the the genome build to use (hg19 or hg38)\n")
@@ -79,8 +79,8 @@ def reversecomp(sequence):
     reverse_complement_sequence = translate(reversed_sequence, trans)
     return reverse_complement_sequence
 
-#random_site_list = open('random_sites.txt', 'w')
-random_site_fasta = open('random_sites.fa', 'w')
+#random_site_list = open('random_hits.txt', 'w')
+random_site_fasta = open('random_hits.fa', 'w')
 random.seed()    #set the seed based on the current system time
 
 if BUILD == 'hg19':
