@@ -3,8 +3,8 @@
 ###########################################################################################################################
 # Adapted from fragment_generation.py by Greg Bedwell (gregoryjbedwell@gmail.com), June 2020.
 #
-# This script is designed for iterative random integration site fragment generation.
-# It is written to output a new fragment file every N number of sites. Each new file will have a new random seed (based on system time).
+# This script is designed for iterative random fragment generation.
+# It is written to output a new fragment file every N number of fragments. Each new file will have a new random seed (based on system time).
 #
 ###########################################################################################################################
 
@@ -14,7 +14,7 @@ from random import randint
 
 print "\n\n"
 print "*"*100
-print "Simulates random integration sites in the human genome"
+print "Simulates random fragmentation of the human genome"
 print "*"*100
 print "\n\n"
 print "Requires:\n"
@@ -36,7 +36,7 @@ ITER = int(raw_input("Enter the desired number of iterations:\n"))
 print "\n"
 DIR = raw_input("Enter the name of the directory in which to place output files\n")
 print "\n"
-N = int(raw_input("Enter the number of random sites to generate:\n")) #number of required random integration sites
+N = int(raw_input("Enter the number of random fragments to generate:\n")) #number of required random integration sites
 print "\n"
 FRAG = raw_input("Enter the genome fragmentation method:\n\nMB for MseI/BglII digestion, NASB for NheI/AvrII/SpeI/BamHI digestion, Random for random fragmentation\n")
 

@@ -1,6 +1,6 @@
 #!/usr/local/bin/python
 ######################################################################################################
-# This script generates a required number of random integration sites.
+# This script generates a required number of random fragments from the human genome.
 # It can accomidate a mix of restriction enzymes (e.g. NheI/AvrII/SpeI/BamHI or MseI/BglII) for fragmentation.
 # It can also fragment by theoretical random fragmentation (e.g. sonication).
 #
@@ -32,7 +32,7 @@ from random import randint
 
 print "\n\n"
 print "*"*100
-print "Simulates random integration sites in the human genome"
+print "Simulates random fragmentation of the human genome"
 print "*"*100
 print "\n\n"
 print "Requires:\n"
@@ -50,7 +50,7 @@ if (BUILD != 'hg19' and BUILD != 'hg38'):
 
 PATH = raw_input("Enter the path to the chromosome fasta files\n")
 print "\n"
-N = int(raw_input("Enter the number of random sites to generate:\n")) #number of required random integration sites
+N = int(raw_input("Enter the number of random fragments to generate:\n")) #number of required random integration sites
 print "\n"
 FRAG = raw_input("Enter the genome fragmentation method:\n\nMB for MseI/BglII digestion, NASB for NheI/AvrII/SpeI/BamHI digestion, Random for random fragmentation\n")
 
