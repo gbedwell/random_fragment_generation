@@ -10,7 +10,7 @@ cat random_hits* > random_hits_cat.fa
 
 awk 'BEGIN{RS=">";OFS="\t"}NR>1{print $1,$2}' random_hits_cat.fa | grep -v 'N' | awk  '$2 != ""' | awk '{print ">"$1"\n"$2}' > cleaned_random_hits.fa
 
-# To better mimic fragment library sizes for NGS, filter the fragments for fragments between 150 bp and 900 bp
+# To better mimic fragment library sizes for NGS, filter the fragments for fragments between 20 bp and 900 bp
 
 awk 'BEGIN{RS=">"}{print $1"\t"$2;}' cleaned_random_hits.fa | awk '{if (length($2) <= 900) {print}}' | awk '{if (length($2) >= 20) {print}}' | awk '{print ">"$1"\n"$2}' > cleaned_filtered.fa
 
