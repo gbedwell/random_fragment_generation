@@ -41,6 +41,3 @@ done
 
 Rscript base_counts.R \
   ${parameterA} base_counts_${parameterB}.txt base_counts_${parameterB}.txt
-
-
-#awk '{printf "%s\n", $2>$1".seq"}' file

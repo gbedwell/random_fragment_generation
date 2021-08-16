@@ -5,7 +5,7 @@ helpFunction()
    echo ""
    echo "Usage: $0 -a parameterA -b parameterB -c parameterC"
    echo -e "\t-a The path to the large multi-entry fasta file."
-   echo -e "\t-b The filename for the output one-entry-per-line fasta file."
+   echo -e "\t-b The filename for the output one-entry-per-line file."
    echo -e "\t-c The directory to store the individual chromosome fasta files."
    exit 1 # Exit script after printing help
 }
