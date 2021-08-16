@@ -29,7 +29,10 @@ The script provided to split the genome multi-fasta file into individual chromos
 The script can be run in the following way:
 
 ```bash
-./fasta_split.sh -a /path/to/multi-fasta	-b single_line.txt -c /path/to/output/directory
+./fasta_split.sh \
+-a /path/to/multi-fasta \
+-b single_line.txt \
+-c /path/to/output/directory
 ```
 
 
@@ -63,7 +66,9 @@ To generate this file from the starting multi-fasta file, run the script <code>b
 The script can be run as follows:
 
 ```bash
-./base_counts_generation.sh -a /path/to/multi-fasta -b CHM13_v1.1
+./base_counts_generation.sh \
+-a /path/to/multi-fasta \
+-b CHM13_v1.1
 ```
 
 
