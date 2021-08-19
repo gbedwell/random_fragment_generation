@@ -203,7 +203,7 @@ while i < int(args.N):
                         if site > 18 and site < 899: # Gives a minimum fragment length of 19 bp + 1 bp of the restriction site added in the following lines
 
                             seq1 = chromosome_fragment[0:min(site+1,150)]
-                            seq2 = chromosome_fragment[max(site+1-150,0):site+2]
+                            seq2 = chromosome_fragment[max(site+1-150,0):site+1]
                             seq2 = reversecomp(seq2)
 
                             if args.output == str('fasta'):

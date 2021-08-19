@@ -2,7 +2,7 @@
 
 A critical part of any analysis of integration site preferences/biases is a comparison to random integration. Perhaps the most unbiased way to generate this random dataset is to produce it <i>in silico</i>. Below I will describe the pipeline that I have adapted to generate random fragments of a given genome. This pipeline outputs paired-end files (either fasta or fastq) containing genome fragments up to 150 bp in length. The generated files can then be aligned to the human genome using any user-preferred aligner.
 
-
+All scripts referred to in this overview can be found on [GitHub](https://github.com/gbedwell/random_fragment_generation).
 
 ## Pipeline Overview
 
@@ -24,7 +24,7 @@ The script provided to split the genome multi-fasta file into individual chromos
 
 + Parameter <code>-c</code> defines the path to the desired output location for the newly generated single-fasta files.
 
-  
+
 
 The script can be run in the following way:
 
@@ -61,8 +61,6 @@ To generate this file from the starting multi-fasta file, run the script <code>b
 + <code>-a</code> defines the path to the genome multi-fasta file.
 + <code>-b</code> defines the suffix to append to the output files. This is useful for explicitly naming the <code>base_counts</code> file after specific genome builds.
 
-
-
 The script can be run as follows:
 
 ```bash
@@ -70,8 +68,6 @@ The script can be run as follows:
 -a /path/to/multi-fasta \
 -b CHM13_v1.1
 ```
-
-
 
 When run, the script will print each chromosome sequence on a single line, convert the multi-fasta file a two-column TSV format, and count the length of each chromosome sequence. Then, the generated file will be fed to <code>base_counts.R</code> where the basic arithmetic required to calculate the global starts and global ends of each chromosome is performed. The final output is a tab-delimited text file named <code>base_counts_<SUFFIX>.txt</code> that is ready to be fed into the final script for fragment generation.
 
@@ -96,14 +92,14 @@ In short, my version of the  script is written to:
 
 
 
-There are several required and flags to define when calling <code>fragment_generation.py</code>.
+There are several required flags to define when calling <code>fragment_generation.py</code>.
 
-The required flags are: 
+The required flags are:
 
 + <code>-build</code>: The genome build being used. Currently human genome builds hg19, hg38, and CHM13_v1.1 are implemented.
 + <code>-path</code>: The path to the individual chromosome fasta files.
 + <code>-bc</code>: The full name of the <code>base_counts</code> file.
-+ <code>N</code>: The number of random sites to generate.
++ <code>-N</code>: The number of random sites to generate.
 + <code>-frag</code>: The desired fragmentation method.
 + <code>-dir</code>: The desired location of the output files.
 + <code>-distance</code>: The maximum distance allowed to the upstream cleavage site.
@@ -133,11 +129,8 @@ python2 fragment_generation.py \
 -file_num 1 \
 -output fasta \
 -mu 500 \
--sigma 300
+-sigma 250
 ```
-
-
-
 
 
 Descriptions of the script and the parameters themselves can be accessed as follows:
