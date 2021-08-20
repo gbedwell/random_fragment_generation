@@ -134,10 +134,10 @@ while i < int(args.N):
                 if restre is None:
 
                     #site = int(round(random.gauss(int(args.mu),int(args.sigma)), 1))
-
+                    
                     site = int(round(min(args.distance, max(0, random.gauss(int(args.mu),int(args.sigma)), 1))))
 
-                    if site >= 19:
+                    if site > 19 and site < 899: # We want fragments between 20 bp and 900 bp
 
                         seq1 = chromosome_fragment[0:min(site+0,150)]
                         seq2 = chromosome_fragment[max(site+0-150,0):site+0]
@@ -154,7 +154,7 @@ while i < int(args.N):
 
                         entry2_name = "_".join([bingo_chromosome.replace('.fa', ''), 'strand', str(strand), str(bingo_site), 'random_site_number', str(i+1)])
 
-                        if seq1 and seq2 and args.output == str('fasta'):
+                        if args.output == str('fasta'):
 
                             entry1 = '>' + bingo_chromosome.replace('.fa', '') + '_' + 'strand_' + str(strand) + '_' + str(bingo_site) + '_' + 'random_site_number_' + str(i+1) + '\n' + seq1 + '\n'
                             random_site_fasta1.write(entry1)
@@ -166,11 +166,7 @@ while i < int(args.N):
 
                             print 'generated site number  ', i
 
-                        else:
-
-                            i = i
-
-                        if seq1 and seq2 and args.output == str('fastq'):
+                        if args.output == str('fastq'):
 
                             Q1 = 'J'
                             Q2 = ['E','F','G']
@@ -201,27 +197,18 @@ while i < int(args.N):
 
                             print 'generated site number  ', i
 
-                        else:
-
-                            i = i
-
-                    else:
-
-                        i = i
-
-
                 else:
                     if restre.search(chromosome_fragment):
 
                         site = chromosome_fragment.find(restre.findall(chromosome_fragment)[0])
 
-                        if site >= 18:
+                        if site > 18 and site < 899: # Gives a minimum fragment length of 19 bp + 1 bp of the restriction site added in the following lines
 
                             seq1 = chromosome_fragment[0:min(site+1,150)]
                             seq2 = chromosome_fragment[max(site+1-150,0):site+1]
                             seq2 = reversecomp(seq2)
 
-                            if seq1 and seq2 and args.output == str('fasta'):
+                            if args.output == str('fasta'):
 
                                 entry1 = '>' + bingo_chromosome.replace('.fa', '') + '_' + 'strand_' + str(strand) + '_' + str(bingo_site) + '_random_site_number_' + str(i+1) + '\n' + seq1 + '\n'
                                 random_site_fasta1.write(entry1)
@@ -233,11 +220,9 @@ while i < int(args.N):
 
                                 print 'generated site number  ', i
 
-                            else:
 
-                                i = i
 
-                            if seq1 and seq2 and args.output == str('fastq'):
+                            if args.output == str('fastq'):
 
                                 Q1 = 'J'
                                 Q2 = ['E','F','G']
@@ -267,14 +252,6 @@ while i < int(args.N):
                                 i = i + 1
 
                                 print 'generated site number  ', i
-
-                            else:
-
-                                i = i
-
-                        else:
-
-                            i = i
 
 if args.output == str('fasta'):
     random_site_fasta1.close()
