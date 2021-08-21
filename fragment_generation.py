@@ -137,6 +137,12 @@ while i < int(args.N):
 
                     site = int(round(min(args.distance, max(0, random.gauss(int(args.mu),int(args.sigma)), 1))))
 
+                    if site <= len(chromosome_fragment):
+                        site = site
+
+                    else:
+                        site = len(chromosome_fragment)
+
                     if site >= 19:
 
                         seq1 = chromosome_fragment[0:min(site+0,150)]
@@ -214,6 +220,12 @@ while i < int(args.N):
                     if restre.search(chromosome_fragment):
 
                         site = chromosome_fragment.find(restre.findall(chromosome_fragment)[0])
+
+                        if site <= len(chromosome_fragment):
+                            site = site
+
+                        else:
+                            site = len(chromosome_fragment)
 
                         if site >= 18:
 
