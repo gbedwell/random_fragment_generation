@@ -21,7 +21,6 @@ parser.add_argument("-bc", "--bc_filename", help="The name of the base_counts.tx
 parser.add_argument("-N", "--N", help="The number of random fragments to generate.")
 parser.add_argument("-frag", "--frag", help="The fragmentation method. Currently accepts M for MseI, MB for MseI/BglII digestion, NASB for NheI/AvrII/SpeI/BamHI digestion, or random for random fragmentation.")
 parser.add_argument("-dir", "--dir", help="The directory to save the output to.")
-parser.add_argument("-distance", "--distance", help="The maximum distance allowed to the cleavage site.")
 parser.add_argument("-mu", "--mu", help="Only used with random fragmentation. Defines the median fragment size.")
 parser.add_argument("-sigma", "--sigma", help="Only used with random fragmentation. Defines the standard deviation of the median fragment size.")
 parser.add_argument("-file_num", "--file_num", help="Numbers the output files. Useful for generating multiple random fragment files in parallel.")
@@ -30,18 +29,18 @@ parser.add_argument("-output", "--output", help="The output filetype. Can be fas
 
 args = parser.parse_args()
 
-if args.build is None or args.path is None or args.bc_filename is None or args.N is None or args.frag is None or args.distance is None or args.dir is None or args.file_num is None or args.output is None:
-    sys.exit("\nYou must provide values for 1) build, 2) path, 3) bc, 4) N, 5) frag, 6) distance, 7) dir, 8) file_num, and 9) output to run this script!\nOne or more of these values is currently not defined!\n\nSee help (-h or --help) for variable definitions.\n")
+if args.build is None or args.path is None or args.bc_filename is None or args.N is None or args.frag is None or args.dir is None or args.file_num is None or args.output is None:
+    sys.exit("\nYou must provide values for 1) build, 2) path, 3) bc, 4) N, 5) frag, 6) dir, 7) file_num, and 8) output to run this script!\nOne or more of these values is currently not defined!\n\nSee help (-h or --help) for variable definitions.\n")
 else:
-    print("\n")
+    print('\n')
     print('build = ' + args.build)
     print('path = ' + args.path)
     print('bc_filename = ' + args.bc_filename)
     print('N = ' + args.N)
     print('frag = ' + args.frag)
-    print('distance = ' + args.distance)
     print('directory = ' + args.dir)
     print('output = ' + args.output)
+    print('\n')
 
     if args.frag == str('random'):
         if args.mu and args.sigma:
@@ -93,49 +92,49 @@ random.seed()    #set the seed based on the current system time
 i = 0
 while i < int(args.N):
     if args.build == str('hg19'):
-        current_site = random.randint(1,3137161264)
+        current_site = random.randint(0,3137161264)
 
     if args.build == str('hg38'):
-        current_site = random.randint(1,3209286105)
+        current_site = random.randint(0,3209286105)
 
     if args.build == str('CHM13_v1.1'):
-        current_site = random.randint(1,3056899953)
+        current_site = random.randint(0,3054832041)
 
     counts_file = open(str(args.path) + '/' + str(args.bc_filename), 'r') #base_counts file should be named
     for line in counts_file.readlines():
         line_clean = line.replace('\n', '')
-        foo = line_clean.split('\t')
+        chr_hit = line_clean.split('\t')
 
-        if (current_site > int(foo[2]) and current_site < int(foo[3])): #if current site > chr start (foo[2]) and < chr end (foo[3])
-            bingo_chromosome = foo[0] #define chromosome containing integration site
-            bingo_site = current_site - int(foo[2])
-                        #print bingo_chromosome, bingo_site, '\n'
-                        #chromosome = open(path + '/' + foo[0] + '.fa', 'r') #open chromosome file containing bingo_site
-                        #print chromosome.readline()
-            with open(str(args.path) + '/' + foo[0] + '.fa', 'r') as f:
+        if (current_site >= int(chr_hit[2]) and current_site < int(chr_hit[3])): #if current site > chr start (chr_hit[2]) and < chr end (chr_hit[3])
+            bingo_chromosome = chr_hit[0] #define chromosome containing integration site
+            bingo_site = current_site - int(chr_hit[2])
+
+            with open(str(args.path) + '/' + chr_hit[0] + '.fa', 'r') as f:
                 strand = random.randrange(2)
                 if strand == 0:
-                    chromosome_fragment = "".join(line.strip() for line in itertools.islice(f, 1, None))[bingo_site - 1:bingo_site + int(args.distance) - 1]
+                    to_end = int(chr_hit[3]) - current_site
+                    chromosome_fragment = "".join(line.strip() for line in itertools.islice(f, 1, None))[bingo_site - 0:bingo_site + to_end]
                 else:
-                    chromosome_fragment = "".join(line.strip() for line in itertools.islice(f, 1, None))[bingo_site - int(args.distance) - 1:bingo_site - 1]
+                    chromosome_fragment = "".join(line.strip() for line in itertools.islice(f, 1, None))[0:bingo_site]
+                    chromosome_fragment = reversecomp(chromosome_fragment)
 
             #fragment DNA by method of choice
 
                 if args.frag == str('M'):
-                    restre = re.compile('(TTAA)', re.IGNORECASE)
+                    re_site = re.compile('(TTAA)', re.IGNORECASE)
                 if args.frag == str('MB'):
-                    restre = re.compile('(TTAA|AGATCT)', re.IGNORECASE)
+                    re_site = re.compile('(TTAA|AGATCT)', re.IGNORECASE)
                 if args.frag == str('NASB'):
-                    restre = re.compile('(GCTAGC|CCTAGG|ACTAGT|GGATCC)', re.IGNORECASE)
+                    re_site = re.compile('(GCTAGC|CCTAGG|ACTAGT|GGATCC)', re.IGNORECASE)
 
                 if args.frag == str('random'):
-                    restre = None
+                    re_site = None
 
-                if restre is None:
+                if re_site is None:
 
                     #site = int(round(random.gauss(int(args.mu),int(args.sigma)), 1))
 
-                    site = int(round(min(args.distance, max(0, random.gauss(int(args.mu),int(args.sigma)), 1))))
+                    site = int(round(min(int(chr_hit[1]), max(0, random.gauss(int(args.mu),int(args.sigma)), 1))))
 
                     if site <= len(chromosome_fragment):
                         site = site
@@ -217,15 +216,15 @@ while i < int(args.N):
 
 
                 else:
-                    if restre.search(chromosome_fragment):
+                    if re_site.search(chromosome_fragment):
 
-                        site = chromosome_fragment.find(restre.findall(chromosome_fragment)[0])
+                        site = chromosome_fragment.find(re_site.findall(chromosome_fragment)[0])
 
-                        if site <= len(chromosome_fragment):
-                            site = site
+                        if not site:
+                            site = len(chromosome_fragment)
 
                         else:
-                            site = len(chromosome_fragment)
+                            site = site
 
                         if site >= 18:
 
