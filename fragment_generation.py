@@ -155,16 +155,16 @@ while i < int(args.N):
                             #entry1 = bingo_chromosome.replace('.fa', '') + '\t' + str(bingo_site) + '\t' + 'random_site_number_' + str(i) + '\t' + chromosome_fragment[0:site + 0] + '\n'
                             #random_site_list.write(entry1)
 
-                        entry1_name = "_".join([bingo_chromosome.replace('.fa', ''), 'strand', str(strand), str(bingo_site), 'random_site_number', str(i+1)])
+                        entry1_name = "_".join([bingo_chromosome.replace('.fa', ''), 'strand', str(strand), str(bingo_site), str(site), 'random_site_number', str(i+1)])
 
-                        entry2_name = "_".join([bingo_chromosome.replace('.fa', ''), 'strand', str(strand), str(bingo_site), 'random_site_number', str(i+1)])
+                        entry2_name = "_".join([bingo_chromosome.replace('.fa', ''), 'strand', str(strand), str(bingo_site), str(site), 'random_site_number', str(i+1)])
 
                         if seq1 and seq2 and args.output == str('fasta'):
 
-                            entry1 = '>' + bingo_chromosome.replace('.fa', '') + '_' + 'strand_' + str(strand) + '_' + str(bingo_site) + '_' + 'random_site_number_' + str(i+1) + '\n' + seq1 + '\n'
+                            entry1 = '>' + entry1_name + '\n' + seq1 + '\n'
                             random_site_fasta1.write(entry1)
 
-                            entry2 = '>' + bingo_chromosome.replace('.fa', '') + '_' + 'strand_' + str(strand) + '_' + str(bingo_site) + '_' + 'random_site_number_' + str(i+1) + '\n' + seq2 + '\n'
+                            entry2 = '>' + entry2_name + '\n' + seq2 + '\n'
                             random_site_fasta2.write(entry2)
 
                             i = i + 1
@@ -196,10 +196,10 @@ while i < int(args.N):
                             fakeq1 = ''.join([samp1, samp2_1, samp3_1])
                             fakeq2 = ''.join([samp1, samp2_2, samp3_2])
 
-                            entry1 = '@' + bingo_chromosome.replace('.fa', '') + '_' + 'strand_' + str(strand) + '_' + str(bingo_site) + '_random_site_number_' + str(i+1) + '\n' + seq1 +'\n' +'+\n'+fakeq1[0:len(seq1)]+'\n'
+                            entry1 = '@' + entry1_name + '\n' + seq1 +'\n' +'+\n'+fakeq1[0:len(seq1)]+'\n'
                             random_site_fastq1.write(entry1)
 
-                            entry2 = '@' + bingo_chromosome.replace('.fa', '') + '_' + 'strand_' + str(strand) + '_' + str(bingo_site) + '_random_site_number_' + str(i+1) + '\n' + seq2 +'\n' +'+\n'+fakeq2[0:len(seq2)]+'\n'
+                            entry2 = '@' + entry2_name + '\n' + seq2 +'\n' +'+\n'+fakeq2[0:len(seq2)]+'\n'
                             random_site_fastq2.write(entry2)
 
                             i = i + 1
@@ -234,10 +234,10 @@ while i < int(args.N):
 
                             if seq1 and seq2 and args.output == str('fasta'):
 
-                                entry1 = '>' + bingo_chromosome.replace('.fa', '') + '_' + 'strand_' + str(strand) + '_' + str(bingo_site) + '_random_site_number_' + str(i+1) + '\n' + seq1 + '\n'
+                                entry1 = '>' + entry1_name + '\n' + seq1 + '\n'
                                 random_site_fasta1.write(entry1)
 
-                                entry2 = '>' + bingo_chromosome.replace('.fa', '') + '_' + 'strand_' + str(strand) + '_' + str(bingo_site) + '_random_site_number_' + str(i+1) + '\n' + seq2 + '\n'
+                                entry2 = '>' + entry2_name + '\n' + seq2 + '\n'
                                 random_site_fasta2.write(entry2)
 
                                 i = i + 1
@@ -269,10 +269,10 @@ while i < int(args.N):
                                 fakeq1 = ''.join([samp1, samp2_1, samp3_1])
                                 fakeq2 = ''.join([samp1, samp2_2, samp3_2])
 
-                                entry1 = '@' + bingo_chromosome.replace('.fa', '') + '_' + 'strand_' + str(strand) + '_' + str(bingo_site) + '_random_site_number_' + str(i+1) + '\n' + seq1 +'\n' +'+\n'+fakeq1[0:len(seq1)]+'\n'
+                                entry1 = '@' + entry1_name + '\n' + seq1 +'\n' +'+\n'+fakeq1[0:len(seq1)]+'\n'
                                 random_site_fastq1.write(entry1)
 
-                                entry2 = '@' + bingo_chromosome.replace('.fa', '') + '_' + 'strand_' + str(strand) + '_' + str(bingo_site) + '_random_site_number_' + str(i+1) + '\n' + seq2 +'\n' +'+\n'+fakeq2[0:len(seq2)]+'\n'
+                                entry2 = '@' + entry2_name + '\n' + seq2 +'\n' +'+\n'+fakeq2[0:len(seq2)]+'\n'
                                 random_site_fastq2.write(entry2)
 
                                 i = i + 1
